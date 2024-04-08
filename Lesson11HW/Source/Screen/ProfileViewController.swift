@@ -18,9 +18,11 @@ class ProfileViewController: BaseViewController {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 50
+        
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         let firstName = builder.makeTextField(placeholder: "First Name:")
+        
         let lastName = builder.makeTextField(placeholder: "Last Name:")
         
         [firstName,lastName].forEach{
@@ -33,6 +35,7 @@ class ProfileViewController: BaseViewController {
         lastName.addSubview(lastCountLabel)
         
         // Constraints to Labels
+              
         
         NSLayoutConstraint.activate([
             firstCountLabel.topAnchor.constraint(equalTo: firstName.bottomAnchor, constant: 5),
@@ -47,7 +50,9 @@ class ProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupActions()
+        setUpUI()
     }
+    
     private func setUpUI() {
         view.addSubview(userInfoStackVIew)
         NSLayoutConstraint.activate([
@@ -58,16 +63,12 @@ class ProfileViewController: BaseViewController {
     }
 }
 
-
-
 // MARK: - Private
 private extension ProfileViewController {
     
     func setupActions() {
         updateRigthtBarButton()
-        
         // Set UITextFieldDelegate for text fields
-        
         if let firstNameField = userInfoStackVIew.arrangedSubviews[0] as? UITextField,
            let lastNameField = userInfoStackVIew.arrangedSubviews[1] as? UITextField {
             firstNameField.delegate = self
@@ -78,7 +79,9 @@ private extension ProfileViewController {
     func updateRigthtBarButton() {
         
         let title = editMode ? "Done" : "Edit"
-
+        
+        
+        
         let barButton = UIBarButtonItem(
             title: title,
             style: .plain,
@@ -130,11 +133,12 @@ private extension ProfileViewController {
         }
     }
 }
+
+// MARK: - SetUp TextFields
+
 extension ProfileViewController: UITextFieldDelegate {
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let maxSize = 30
-        
         guard let text = textField.text, let characterCountLabel = textField.subviews.first as? UILabel else { return true }
         
         let newSize = text.count + string.count - range.length
